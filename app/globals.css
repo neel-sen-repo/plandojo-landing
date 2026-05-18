@@ -1,0 +1,828 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  background: linear-gradient(135deg, #faf8f3 0%, #e8f0ff 100%);
+  color: #333;
+  line-height: 1.6;
+}
+
+.main {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.maxWidth {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, #e8f0ff 0%, #f5f0ff 50%, #fff5eb 100%);
+  padding: 100px 20px;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroContent {
+  max-width: 700px;
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(100, 150, 220, 0.15);
+  color: #4169a6;
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 56px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #4169a6 0%, #6495ed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.heroSubtitle {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+
+.waitlistForm {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.emailInput {
+  flex: 1;
+  min-width: 250px;
+  padding: 14px 20px;
+  border: 2px solid #d0d8ff;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.emailInput:focus {
+  outline: none;
+  border-color: #4169a6;
+  box-shadow: 0 0 0 3px rgba(65, 105, 166, 0.1);
+  background: white;
+}
+
+.ctaButton {
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #4169a6 0%, #6495ed 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(65, 105, 166, 0.3);
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(65, 105, 166, 0.4);
+}
+
+.successMessage {
+  color: #4caf50;
+  font-weight: 600;
+  font-size: 14px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sections General */
+section {
+  padding: 80px 20px;
+}
+
+section h2 {
+  font-size: 42px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.sectionLead {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 50px;
+  line-height: 1.8;
+  max-width: 800px;
+}
+
+.sectionSubtitle {
+  color: #999;
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+/* Problem Section */
+.problemSection {
+  background: white;
+}
+
+.problemGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.problemCard {
+  padding: 40px;
+  background: linear-gradient(135deg, #e8f0ff 0%, #f5f0ff 100%);
+  border-radius: 12px;
+  border-left: 4px solid #6495ed;
+  transition: all 0.3s ease;
+}
+
+.problemCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(100, 150, 220, 0.15);
+}
+
+.problemIcon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.problemCard h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #4169a6;
+}
+
+.problemList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.problemList li {
+  padding: 10px 0;
+  padding-left: 25px;
+  position: relative;
+  color: #666;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.problemList li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #6495ed;
+  font-weight: bold;
+}
+
+.insightBox {
+  background: linear-gradient(135deg, #e8f0ff 0%, #f5f0ff 100%);
+  padding: 30px;
+  border-radius: 12px;
+  border-left: 4px solid #6495ed;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.8;
+}
+
+/* Slider Section */
+.sliderSection {
+  background: linear-gradient(135deg, #f5f0ff 0%, #fff5eb 100%);
+  text-align: center;
+}
+
+.sliderWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 30px auto;
+  overflow: hidden;
+  border-radius: 12px;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  touch-action: none; /* avoid touch-driven scrolling while dragging */
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.imgNormalized {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.mask {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.mask .imgNormalized {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.handle {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.handleLine {
+  width: 2px;
+  height: 100%;
+  background: white;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+}
+
+.handleCircle {
+  width: 28px;
+  height: 28px;
+  background: white;
+  border-radius: 50%;
+  border: 2px solid #4169a6;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  cursor: grab;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.handleCircle:hover {
+  transform: translateX(-50%) scale(1.1);
+  box-shadow: 0 4px 12px rgba(65, 105, 166, 0.3);
+}
+
+.sliderLabel {
+  display: flex;
+  justify-content: space-between;
+  max-width: 700px;
+  margin: 20px auto 0;
+  font-size: 14px;
+  color: #999;
+  font-weight: 600;
+}
+
+.sliderNote {
+  margin-top: 30px;
+  color: #666;
+  font-size: 15px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Solution Section */
+.solutionSection {
+  background: white;
+}
+
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+}
+
+.stepCard {
+  padding: 40px;
+  background: linear-gradient(135deg, #e8f0ff 0%, #f5f0ff 100%);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.stepCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(100, 150, 220, 0.15);
+}
+
+.stepNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #4169a6 0%, #6495ed 100%);
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.stepCard h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #4169a6;
+}
+
+.stepCard p {
+  color: #666;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* Wedge Section */
+.wedgeSection {
+  background: linear-gradient(135deg, #f5f0ff 0%, #fff5eb 100%);
+}
+
+.wedgeContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.wedgeStep {
+  text-align: center;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  min-width: 180px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.wedgeStepNumber {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.wedgeStep h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #4169a6;
+}
+
+.wedgeStep p {
+  font-size: 14px;
+  color: #666;
+}
+
+.wedgeArrow {
+  font-size: 24px;
+  color: #6495ed;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .wedgeContent {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .wedgeArrow {
+    transform: rotate(90deg);
+  }
+}
+
+/* Sample Project Section */
+.sampleProjectSection {
+  background: white;
+}
+
+.samplePlanContainer {
+  background: linear-gradient(135deg, #f5f0ff 0%, #fff5eb 100%);
+  border-radius: 12px;
+  padding: 40px;
+  margin-bottom: 20px;
+}
+
+.planHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #e0e0e0;
+  font-size: 15px;
+}
+
+.planContent h3 {
+  font-size: 20px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  color: #4169a6;
+  font-weight: 600;
+}
+
+.planNote {
+  color: #999;
+  font-size: 14px;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.planList {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.planList li {
+  padding: 10px 0;
+  padding-left: 25px;
+  position: relative;
+  color: #666;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.planList li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #6495ed;
+  font-weight: bold;
+}
+
+.budgetTable {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.budgetRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+}
+
+.budgetRow:last-child {
+  border-bottom: none;
+}
+
+.budgetRow.highlighted {
+  background: linear-gradient(135deg, #e8f0ff 0%, #f5f0ff 100%);
+  font-weight: 600;
+  color: #4169a6;
+}
+
+.contractorNotesBox {
+  background: linear-gradient(135deg, #e8f0ff 0%, #f5f0ff 100%);
+  padding: 30px;
+  border-radius: 8px;
+  border-left: 4px solid #6495ed;
+  margin-top: 30px;
+}
+
+.contractorNotesBox h4 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #4169a6;
+}
+
+.contractorNotesBox p {
+  color: #666;
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 15px;
+}
+
+.feedbackNote {
+  font-weight: 500;
+  color: #4169a6;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+.small {
+  font-size: 14px;
+  color: #999;
+}
+
+/* Moat Section */
+.moatSection {
+  background: linear-gradient(135deg, #f5f0ff 0%, #fff5eb 100%);
+}
+
+.flyWheelGrid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 50px;
+}
+
+.flyWheelStep {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 250px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.circleNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #4169a6 0%, #6495ed 100%);
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0 auto 10px;
+}
+
+.flyWheelStep h3 {
+  font-size: 16px;
+  margin: 0;
+  color: #4169a6;
+  font-weight: 600;
+}
+
+.flyWheelStep p {
+  font-size: 13px;
+  color: #666;
+  margin: 8px 0 0 0;
+}
+
+.flyWheelArrow {
+  font-size: 20px;
+  color: #6495ed;
+}
+
+.moatFeatures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.moatFeature {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  border-top: 4px solid #6495ed;
+}
+
+.moatFeature strong {
+  font-size: 16px;
+  color: #4169a6;
+}
+
+.moatFeature p {
+  color: #666;
+  font-size: 15px;
+  line-height: 1.8;
+  margin-top: 10px;
+}
+
+/* Why Now Section */
+.whyNowSection {
+  background: white;
+}
+
+.whyNowGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.whyNowCard {
+  background: linear-gradient(135deg, #e8f0ff 0%, #f5f0ff 100%);
+  padding: 30px;
+  border-radius: 12px;
+  border-left: 4px solid #6495ed;
+}
+
+.whyNowCard h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #4169a6;
+}
+
+.whyNowCard p {
+  color: #666;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* Positioning Section */
+.positioningSection {
+  background: linear-gradient(135deg, #f5f0ff 0%, #fff5eb 100%);
+}
+
+.stackDiagram {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stackBox {
+  background: white;
+  padding: 30px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.stackBox.highlight {
+  background: linear-gradient(135deg, #e8f0ff 0%, #f5f0ff 100%);
+  border: 2px solid #6495ed;
+  transform: scale(1.05);
+}
+
+.stackBox strong {
+  color: #4169a6;
+  font-size: 16px;
+}
+
+.stackArrow {
+  text-align: center;
+  font-size: 20px;
+  color: #6495ed;
+  padding: 5px 0;
+}
+
+.advantageList {
+  list-style: none;
+  padding: 0;
+  margin: 30px 0;
+}
+
+.advantageList li {
+  padding: 20px 0;
+  padding-left: 30px;
+  position: relative;
+  color: #666;
+  font-size: 15px;
+  line-height: 1.8;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.advantageList li:last-child {
+  border-bottom: none;
+}
+
+.advantageList li:before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  color: #6495ed;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.advantageList strong {
+  color: #4169a6;
+}
+
+/* CTA Section */
+.ctaSection {
+  background: linear-gradient(135deg, #4169a6 0%, #6495ed 100%);
+  text-align: center;
+  color: white;
+}
+
+.ctaSection h2 {
+  color: white;
+}
+
+.ctaSection p {
+  font-size: 18px;
+  margin-bottom: 40px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ctaForm .emailInput {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: white;
+  max-width: 400px;
+}
+
+.ctaForm .emailInput::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.ctaForm .emailInput:focus {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: white;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.ctaForm .ctaButton {
+  background: white;
+  color: #4169a6;
+  font-weight: 700;
+}
+
+.ctaForm .ctaButton:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Footer */
+.footer {
+  padding: 30px 20px;
+  background: #333;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Slider drag/selection overrides */
+.sliderWrapper, .mask, .handle, .imgNormalized {
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .waitlistForm {
+    flex-direction: column;
+  }
+
+  .emailInput {
+    min-width: 100%;
+  }
+
+  section h2 {
+    font-size: 32px;
+  }
+
+  .planHeader {
+    grid-template-columns: 1fr;
+  }
+
+  .samplePlanContainer {
+    padding: 20px;
+  }
+
+  .stackBox.highlight {
+    transform: scale(1);
+  }
+}
