@@ -6,6 +6,8 @@ export default function Home() {
   const [dragging, setDragging] = useState(false);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const containerRef = useRef(null);
 
   const startDrag = (e) => {
@@ -46,17 +48,39 @@ export default function Home() {
     };
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email) {
-      fetch("/api/waitlist", {
+    
+    if (!email.trim()) {
+      setError("Please enter an email");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
-      }).catch(() => {});
+      });
+
+      const data = await res.json();
+      
+      if (!res.ok) {
+        setError(data.error || "Something went wrong");
+        setLoading(false);
+        return;
+      }
+
       setSubmitted(true);
       setEmail("");
       setTimeout(() => setSubmitted(false), 3000);
+    } catch (err) {
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,14 +100,15 @@ export default function Home() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
+              disabled={loading}
               className="emailInput"
             />
-            <button type="submit" className="ctaButton">
-              Join Waitlist
+            <button type="submit" disabled={loading} className="ctaButton">
+              {loading ? "Joining..." : "Join Waitlist"}
             </button>
           </form>
           {submitted && <p className="successMessage">✓ You're on the list!</p>}
+          {error && <p className="errorMessage">{error}</p>}
         </div>
       </header>
 
@@ -446,13 +471,15 @@ export default function Home() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
+              disabled={loading}
               className="emailInput"
             />
-            <button type="submit" className="ctaButton">
-              Join Waitlist
+            <button type="submit" disabled={loading} className="ctaButton">
+              {loading ? "Joining..." : "Join Waitlist"}
             </button>
           </form>
+          {submitted && <p className="successMessage">✓ You're on the list!</p>}
+          {error && <p className="errorMessage">{error}</p>}
         </div>
       </section>
 

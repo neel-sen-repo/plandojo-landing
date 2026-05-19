@@ -1,0 +1,5 @@
+timestamp,email,ip,country,region,city,latitude,longitude
+2026-05-19T15:49:11.979Z,user1@example.com,::1,,,,,
+2026-05-19T15:50:39.896Z,prod1@example.com,::1,,,,,
+2026-05-19T15:50:39.910Z,prod2@test.com,::1,,,,,
+2026-05-19T15:50:39.915Z,prod3+tag@test.com,::1,,,,,
