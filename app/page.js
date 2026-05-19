@@ -8,6 +8,9 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [metrics, setMetrics] = useState({ signups: 0, visits: 0 });
+  const [metricsLoading, setMetricsLoading] = useState(true);
+  const [metricsError, setMetricsError] = useState("");
   const containerRef = useRef(null);
 
   const startDrag = (e) => {
@@ -34,6 +37,47 @@ export default function Home() {
     setSlider(percent);
   };
 
+  const fetchMetrics = async () => {
+    try {
+      const res = await fetch("/api/metrics");
+      if (!res.ok) {
+        throw new Error("Failed to load metrics");
+      }
+      const data = await res.json();
+      setMetrics({
+        signups: data.totalSignups ?? 0,
+        visits: data.visits ?? 0,
+      });
+    } catch (err) {
+      setMetricsError("Unable to load stats");
+    } finally {
+      setMetricsLoading(false);
+    }
+  };
+
+  const recordVisit = async () => {
+    try {
+      const res = await fetch("/api/metrics", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (res.status === 200) {
+        const data = await res.json();
+        setMetrics({
+          signups: data.totalSignups ?? 0,
+          visits: data.visits ?? 0,
+        });
+      } else {
+        await fetchMetrics();
+      }
+    } catch (err) {
+      setMetricsError("Unable to load stats");
+    } finally {
+      setMetricsLoading(false);
+    }
+  };
+
   useEffect(() => {
     window.addEventListener("mousemove", onDrag);
     window.addEventListener("touchmove", onDrag);
@@ -46,7 +90,11 @@ export default function Home() {
       window.removeEventListener("mouseup", stopDrag);
       window.removeEventListener("touchend", stopDrag);
     };
-  });
+  }, []);
+
+  useEffect(() => {
+    recordVisit();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -489,6 +537,21 @@ export default function Home() {
           <p>&copy; 2026 PlanDojo. Clarity for home renovation.</p>
         </div>
       </footer>
+
+      <div className="metricsWidget" aria-live="polite">
+        <div className="metricsHeading">Live engagement</div>
+        <div className="metricsItem">
+          <span className="metricsValue">{metrics.signups.toLocaleString()}</span>
+          <span className="metricsLabel">Signups</span>
+        </div>
+        <div className="metricsItem">
+          <span className="metricsValue">{metrics.visits.toLocaleString()}</span>
+          <span className="metricsLabel">Page visits</span>
+        </div>
+        <div className="metricsNote">
+          {metricsLoading ? "Updating…" : metricsError ? metricsError : "Refreshed on page load"}
+        </div>
+      </div>
     </main>
   );
 }

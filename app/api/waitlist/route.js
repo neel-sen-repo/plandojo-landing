@@ -43,6 +43,21 @@ async function ensureCsvFile() {
   }
 }
 
+async function getExistingEmails() {
+  try {
+    await ensureCsvFile();
+    const content = await readFile(CSV_FILE, "utf8");
+    const lines = content.split("\n").filter(Boolean).slice(1);
+    return new Set(
+      lines
+        .map((line) => line.split(",")[1]?.trim().toLowerCase())
+        .filter(Boolean)
+    );
+  } catch {
+    return new Set();
+  }
+}
+
 export async function POST(req) {
   try {
     const { email } = await req.json();
@@ -62,6 +77,19 @@ export async function POST(req) {
       );
     }
 
+    const normalizedEmail = email.toLowerCase().trim();
+    const existingEmails = await getExistingEmails();
+
+    if (existingEmails.has(normalizedEmail)) {
+      return Response.json(
+        {
+          ok: false,
+          error: "You are already signed up, thank you!",
+        },
+        { status: 409 }
+      );
+    }
+
     // Get geolocation
     const ip =
       req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
@@ -73,7 +101,7 @@ export async function POST(req) {
     
     const row = {
       timestamp: new Date().toISOString(),
-      email: email.toLowerCase().trim(),
+      email: normalizedEmail,
       ip,
       country: geo?.country || "",
       region: geo?.region || "",
@@ -83,7 +111,6 @@ export async function POST(req) {
     };
 
     // Save to CSV
-    await ensureCsvFile();
     const csvLine = Object.values(row).map(csvEscape).join(",") + "\n";
     await appendFile(CSV_FILE, csvLine, "utf8");
 
@@ -108,10 +135,19 @@ export async function POST(req) {
 // GET endpoint to check waitlist stats
 export async function GET() {
   try {
+    await ensureCsvFile();
     const content = await readFile(CSV_FILE, "utf8");
-    const lines = content.split("\n").filter(Boolean).slice(1); // skip header and empty
+    const uniqueEmails = new Set(
+      content
+        .split("\n")
+        .filter(Boolean)
+        .slice(1)
+        .map((line) => line.split(",")[1]?.trim().toLowerCase())
+        .filter(Boolean)
+    );
+
     return Response.json({
-      totalSignups: lines.length,
+      totalSignups: uniqueEmails.size,
       lastUpdated: new Date().toISOString(),
     });
   } catch {
