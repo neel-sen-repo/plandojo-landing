@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="160" viewBox="0 0 800 160">
+  <style>
+    .label { font-family: Inter, Roboto, system-ui, -apple-system, sans-serif; font-size:14px; fill:#0f172a; }
+    .hex { font-family: Inter, Roboto, system-ui, -apple-system, sans-serif; font-size:12px; fill:#0f172a; opacity:0.8; }
+  </style>
+  <rect x="0" y="0" width="800" height="160" fill="#ffffff"/>
+
+  <!-- Primary -->
+  <rect x="16" y="16" width="120" height="120" rx="8" fill="#4169A6" />
+  <text x="16" y="150" class="label">Primary</text>
+  <text x="16" y="166" class="hex">#4169A6</text>
+
+  <!-- Accent -->
+  <rect x="152" y="16" width="120" height="120" rx="8" fill="#6495ED" />
+  <text x="152" y="150" class="label">Accent</text>
+  <text x="152" y="166" class="hex">#6495ED</text>
+
+  <!-- Background -->
+  <rect x="288" y="16" width="120" height="120" rx="8" fill="#FAF8F3" stroke="#E6E3DF" />
+  <text x="288" y="150" class="label">Background</text>
+  <text x="288" y="166" class="hex">#FAF8F3</text>
+
+  <!-- Muted -->
+  <rect x="424" y="16" width="120" height="120" rx="8" fill="#9CA3AF" />
+  <text x="424" y="150" class="label">Muted</text>
+  <text x="424" y="166" class="hex">#9CA3AF</text>
+
+  <!-- Success -->
+  <rect x="560" y="16" width="120" height="120" rx="8" fill="#4CAF50" />
+  <text x="560" y="150" class="label">Success</text>
+  <text x="560" y="166" class="hex">#4CAF50</text>
+
+  <!-- Danger -->
+  <rect x="696" y="16" width="88" height="120" rx="8" fill="#F44336" />
+  <text x="696" y="150" class="label">Danger</text>
+  <text x="696" y="166" class="hex">#F44336</text>
+</svg>
