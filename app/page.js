@@ -11,15 +11,20 @@ export default function Home() {
   const [metrics, setMetrics] = useState({ signups: 0, visits: 0 });
   const [metricsLoading, setMetricsLoading] = useState(true);
   const [metricsError, setMetricsError] = useState("");
+  const [activeTab, setActiveTab] = useState(null); // Managed state for progressive disclosure
   const containerRef = useRef(null);
+
+  const toggleTab = (id) => {
+    setActiveTab(activeTab === id ? null : id);
+  };
 
   const startDrag = (e) => {
     e?.preventDefault?.();
     setDragging(true);
-    // disable text selection during drag
     document.body.style.userSelect = 'none';
     document.body.style.webkitUserSelect = 'none';
   };
+  
   const stopDrag = () => {
     setDragging(false);
     document.body.style.userSelect = '';
@@ -90,7 +95,7 @@ export default function Home() {
       window.removeEventListener("mouseup", stopDrag);
       window.removeEventListener("touchend", stopDrag);
     };
-  }, []);
+  }, [dragging]);
 
   useEffect(() => {
     recordVisit();
@@ -137,73 +142,34 @@ export default function Home() {
       {/* Hero Section */}
       <header className="hero">
         <div className="heroContent">
-          <div className="badge">The Alignment Layer for Home Renovation</div>
-          <h1>End Renovation Chaos</h1>
+          <div className="badge">The Pre-Bid Standard for Home Renovation</div>
+          <h1>Get Your Renovation Sorted</h1>
           <p className="heroSubtitle">
-            Photos to draft plans in under 60 seconds. Homeowners and contractors finally on the same page.
+            Photos to a precise baseline project scope in 60 seconds. Directly over text. No apps to download, no cognitive overload.
           </p>
           <form onSubmit={handleSubmit} className="waitlistForm">
             <input
               type="email"
-              placeholder="Enter your email"
+              placeholder="Enter your email or phone number"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
               className="emailInput"
             />
             <button type="submit" disabled={loading} className="ctaButton">
-              {loading ? "Joining..." : "Join Waitlist"}
+              {loading ? "Initializing..." : "Initialize Scope Sequence →"}
             </button>
           </form>
-          {submitted && <p className="successMessage">✓ You're on the list!</p>}
+          {submitted && <p className="successMessage">✓ Session Initialized! Check your messaging thread.</p>}
           {error && <p className="errorMessage">{error}</p>}
         </div>
       </header>
 
-      {/* The Problem: $600B Misalignment Tax */}
-      <section className="problemSection">
-        <div className="maxWidth">
-          <h2>The $600B Misalignment Tax</h2>
-          <p className="sectionLead">
-            Hidden inefficiencies between homeowners and contractors paralyze <strong>$600 billion in home equity</strong>.
-          </p>
-
-          <div className="problemGrid">
-            <div className="problemCard">
-              <div className="problemIcon">🏠</div>
-              <h3>Homeowners</h3>
-              <ul className="problemList">
-                <li>What are my real options?</li>
-                <li>Afraid of getting ripped off</li>
-                <li>Every contractor gives different scope</li>
-                <li>Can't visualize the final result</li>
-              </ul>
-            </div>
-            <div className="problemCard">
-              <div className="problemIcon">👷</div>
-              <h3>Contractors</h3>
-              <ul className="problemList">
-                <li>Homeowners don't know what they want</li>
-                <li>Every job starts correcting assumptions</li>
-                <li>$300+ wasted per unvetted site visit</li>
-                <li>30–40% uncertainty baked into bids</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="insightBox">
-            <p>
-              <strong>The result:</strong> Homeowners lack clarity. Contractors waste time. Projects get delayed, budgets balloon, and $600B in home equity remains untapped.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Before/After Visualization */}
+      {/* Before/After Visual Interactive WedgeSlider */}
       <section className="sliderSection">
         <div className="maxWidth">
-          <h2>See Your Renovation Before You Commit</h2>
-          <p className="sliderSubtitle">Instant spatial clarity—no app download needed</p>
+          <h2>Instant Spatial Clarity Over Messaging</h2>
+          <p className="sliderSubtitle">See your structural baseline transform instantly</p>
 
           <div
             className="sliderWrapper"
@@ -212,9 +178,9 @@ export default function Home() {
             onTouchStart={(e) => startDrag(e)}
             onDragStart={(e) => e.preventDefault()}
           >
-            <img src="/after.jpg" className="imgNormalized" alt="Renovated" draggable={false} />
+            <img src="/after.jpg" className="imgNormalized" alt="Renovated Layout" draggable={false} />
             <div className="mask" style={{ clipPath: `inset(0 ${100 - slider}% 0 0)` }}>
-              <img src="/before.jpg" className="imgNormalized" alt="Current" draggable={false} />
+              <img src="/before.jpg" className="imgNormalized" alt="Current Environmental State" draggable={false} />
             </div>
             <div className="handle" style={{ left: `${slider}%` }}>
               <div className="handleLine"></div>
@@ -222,311 +188,143 @@ export default function Home() {
             </div>
           </div>
           <div className="sliderLabel">
-            <span>Current State</span>
-            <span>Your Renovation</span>
+            <span>[ Current Space Profile ]</span>
+            <span>[ AURA Spatial Telemetry Node ]</span>
           </div>
 
           <p className="sliderNote">
-            This is what homeowners see. Contractors get a detailed scope sheet with materials, timeline, and verified measurements.
+            This is the visual baseline homeowners experience. Trade partners simultaneously receive an authenticated, code-verifiable takeoff scope document.
           </p>
         </div>
       </section>
 
-      {/* The Solution */}
-      <section className="solutionSection">
-        <div className="maxWidth">
-          <h2>How PlanDojo Works</h2>
-          <p className="sectionLead">
-            From photos to actionable plans in seconds. An intelligent system that speaks both homeowner and contractor.
-          </p>
-
-          <div className="stepsGrid">
-            <div className="stepCard">
-              <div className="stepNumber">1</div>
-              <h3>Homeowner Uploads Photos</h3>
-              <p>Send photos of your space via web or messaging. Tell us what you're dreaming of.</p>
-            </div>
-            <div className="stepCard">
-              <div className="stepNumber">2</div>
-              <h3>AURA AI Infers Everything</h3>
-              <p>Geometry, materials, depth, layout—all extracted from your photos in under 60 seconds.</p>
-            </div>
-            <div className="stepCard">
-              <div className="stepNumber">3</div>
-              <h3>Draft Plan Generated</h3>
-              <p>Detailed scope, timeline, materials list, and budget estimate—all auto-generated.</p>
-            </div>
-            <div className="stepCard">
-              <div className="stepNumber">4</div>
-              <h3>Contractor Feedback Loop</h3>
-              <p>Contractors review, correct, and provide expert estimates. Each correction improves the AI.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* The Wedge: Photos to Scope */}
-      <section className="wedgeSection">
-        <div className="maxWidth">
-          <h2>Photos to Scope in &lt; 60 Seconds</h2>
-          <p className="sectionLead">
-            Our inference engine builds the draft plan in the background while you interact conversationally.
-          </p>
-
-          <div className="wedgeContent">
-            <div className="wedgeStep">
-              <div className="wedgeStepNumber">📸</div>
-              <h3>Capture</h3>
-              <p>Homeowner sends photos of their space</p>
-            </div>
-            <div className="wedgeArrow">→</div>
-            <div className="wedgeStep">
-              <div className="wedgeStepNumber">🧠</div>
-              <h3>Infer</h3>
-              <p>System measures: ceiling height, counters, cabinets, layout, materials</p>
-            </div>
-            <div className="wedgeArrow">→</div>
-            <div className="wedgeStep">
-              <div className="wedgeStepNumber">📋</div>
-              <h3>Plan</h3>
-              <p>Draft scope, timeline, and budget in &lt; 60 seconds</p>
-            </div>
-          </div>
-
-          <div className="insightBox">
-            <p>
-              We are not another lead-gen platform. <strong>We build the bridge of trust</strong> through verified scope, not just qualified leads.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Sample Project Plan */}
+      {/* Your Project Coordination Center - Progressive Disclosure Interface */}
       <section className="sampleProjectSection">
         <div className="maxWidth">
-          <h2>Example: Kitchen Backsplash Scope</h2>
-          <p className="sectionLead">This is what contractors receive. Auto-generated from photos, ready for field verification.</p>
-
-          <div className="samplePlanContainer">
-            <div className="planHeader">
-              <div>
-                <strong>Project Type:</strong> Kitchen Backsplash Replacement (with Window Return)
-              </div>
-              <div>
-                <strong>Location:</strong> Long Valley, NJ
-              </div>
-            </div>
-
-            <div className="planContent">
-              <h3>Before & After Reference</h3>
-              <p className="planNote">
-                The images provide spatial context so contractors understand the homeowner's target look. Contractor must verify all measurements on-site before final pricing.
-              </p>
-
-              <h3>Existing Conditions (From Photos)</h3>
-              <ul className="planList">
-                <li>Standard 36" countertop height</li>
-                <li>Backsplash runs along main counter wall and wraps left side of window return</li>
-                <li>Existing grout lines standard width (⅛")</li>
-                <li>Substrate: Drywall (standard, no prep required)</li>
-              </ul>
-
-              <h3>Proposed Scope</h3>
-              <ul className="planList">
-                <li>Remove existing backsplash tile and grout</li>
-                <li>Prepare substrate: Clean, level, prime</li>
-                <li>Install new subway tile with ⅛" grout lines</li>
-                <li>Seal grout per manufacturer specs</li>
-                <li>Window return trim finish</li>
-              </ul>
-
-              <h3>Timeline Estimate</h3>
-              <ul className="planList">
-                <li><strong>Day 1:</strong> Demolition & substrate prep (4-6 hours)</li>
-                <li><strong>Days 2-3:</strong> Tile installation & grouting (8-10 hours)</li>
-                <li><strong>Day 4:</strong> Grout sealing & cleanup (2 hours)</li>
-              </ul>
-
-              <h3>Budget Breakdown</h3>
-              <div className="budgetTable">
-                <div className="budgetRow">
-                  <span>Materials (tile, grout, primer, sealant)</span>
-                  <span>$800 - $1,200</span>
-                </div>
-                <div className="budgetRow">
-                  <span>Labor (3-4 days for experienced tile setter)</span>
-                  <span>$2,400 - $3,200</span>
-                </div>
-                <div className="budgetRow">
-                  <span>Permits & Disposal</span>
-                  <span>$200 - $400</span>
-                </div>
-                <div className="budgetRow highlighted">
-                  <span><strong>Total Estimate</strong></span>
-                  <span><strong>$3,400 - $4,800</strong></span>
-                </div>
-              </div>
-
-              <div className="contractorNotesBox">
-                <h4>🧑‍🔧 Contractor Notes</h4>
-                <p>This scope was auto-generated from homeowner photos by PlanDojo. Use this as your baseline:</p>
-                <ul className="planList">
-                  <li>Refine cost based on local market rates</li>
-                  <li>Verify all measurements during site visit</li>
-                  <li>Suggest material alternatives (premium tile, grout colors)</li>
-                  <li>Note any existing conditions requiring adjustment</li>
-                </ul>
-                <p className="feedbackNote">
-                  <strong>Critical:</strong> Each correction you provide improves our AI's accuracy for future homeowners. Your expertise is the moat.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* The Moat */}
-      <section className="moatSection">
-        <div className="maxWidth">
-          <h2>The Intelligence Flywheel</h2>
+          <h2>Your Project Coordination Center</h2>
           <p className="sectionLead">
-            Every project tightens the loop between AI and contractor reality.
+            AURA instantly parses raw environmental photos into highly structured spatial constraints. Open a configuration layer below to verify your telemetry data.
           </p>
 
-          <div className="flyWheelGrid">
-            <div className="flyWheelStep">
-              <div className="circleNumber">1</div>
-              <h3>Homeowner uploads photos</h3>
+          <div className="accordionWrapper">
+            
+            {/* PANEL 1: GEOMETRY */}
+            <div className="accordionItem">
+              <button className="accordionHeader" onClick={() => toggleTab(1)}>
+                <span>📐 Verified Geometry &amp; Spatial Constraints</span>
+                <span className="accordionIndicator">{activeTab === 1 ? "−" : "+"}</span>
+              </button>
+              {activeTab === 1 && (
+                <div className="accordionContent">
+                  <p className="planNote">Raw physical parameters extracted from camera feeds and map vectors.</p>
+                  <ul className="planList">
+                    <li>Verified 36" countertop height baseline parameters.</li>
+                    <li>Backsplash configuration runs cleanly along primary wall and wraps left side of window return structure.</li>
+                    <li>Existing grout matrices evaluated at uniform ⅛" runtime bounds.</li>
+                    <li>Substrate Base: Drywall (stable classification, standard preparation profile).</li>
+                  </ul>
+                </div>
+              )}
             </div>
-            <div className="flyWheelArrow">↓</div>
-            <div className="flyWheelStep">
-              <div className="circleNumber">2</div>
-              <h3>AURA generates draft plan</h3>
+
+            {/* PANEL 2: SCOPE */}
+            <div className="accordionItem">
+              <button className="accordionHeader" onClick={() => toggleTab(2)}>
+                <span>📋 Proposed Technical Scope Matrix</span>
+                <span className="accordionIndicator">{activeTab === 2 ? "−" : "+"}</span>
+              </button>
+              {activeTab === 2 && (
+                <div className="accordionContent">
+                  <p className="planNote">Automated operational checklist translated for cross-ecosystem contractor compliance.</p>
+                  <ul className="planList">
+                    <li>Extract existing tile arrays and clear compound adhesive residues.</li>
+                    <li>Prepare underlying substrate base: clean, plane level, and apply structural primer.</li>
+                    <li>Set uniform new subway tile pattern layout with ⅛" precision joint lines.</li>
+                    <li>Apply high-durability moisture barrier grout sealant per manufacturer specifications.</li>
+                  </ul>
+                </div>
+              )}
             </div>
-            <div className="flyWheelArrow">↓</div>
-            <div className="flyWheelStep">
-              <div className="circleNumber">3</div>
-              <h3>Contractor reviews & corrects</h3>
+
+            {/* PANEL 3: TIMELINE & BUDGET */}
+            <div className="accordionItem">
+              <button className="accordionHeader" onClick={() => toggleTab(3)}>
+                <span>⏳ Estimated Timeline &amp; Budget Baselines</span>
+                <span className="accordionIndicator">{activeTab === 3 ? "−" : "+"}</span>
+              </button>
+              {activeTab === 3 && (
+                <div className="accordionContent">
+                  <p className="planNote">Resource distribution variables mapped against localized labor nodes.</p>
+                  <div className="budgetTable">
+                    <div className="budgetRow">
+                      <span>Phase 1: Demolition &amp; Substrate Base Prep</span>
+                      <strong>4–6 Hours</strong>
+                    </div>
+                    <div className="budgetRow">
+                      <span>Phase 2: Tile Installation Matrix &amp; Grouting</span>
+                      <strong>8–10 Hours</strong>
+                    </div>
+                    <div className="budgetRow highlighted">
+                      <span>Total Estimated Construction Runtime</span>
+                      <span>14–18 Hours</span>
+                    </div>
+                  </div>
+                  <div className="budgetTable" style={{ marginTop: "12px" }}>
+                    <div className="budgetRow">
+                      <span>Raw Material Estimates (Tile, Grout, Compounds)</span>
+                      <strong>$800 - $1,200</strong>
+                    </div>
+                    <div className="budgetRow">
+                      <span>Localized Labor Allocation Baseline</span>
+                      <strong>$2,400 - $3,200</strong>
+                    </div>
+                    <div className="budgetRow highlighted">
+                      <span>Total Pre-Bid Baseline Assessment</span>
+                      <span>$3,400 - $4,800</span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="flyWheelArrow">↓</div>
-            <div className="flyWheelStep">
-              <div className="circleNumber">4</div>
-              <h3>Corrections feed back into AURA</h3>
-            </div>
-            <div className="flyWheelArrow">↓</div>
-            <div className="flyWheelStep">
-              <div className="circleNumber">5</div>
-              <h3>Model improves (50% → 75% → 85%+ accuracy)</h3>
+
+          </div>
+
+          {/* High-Intent Strategic Interactive Next Step Endpoint */}
+          <div className="actionCtaBlock">
+            <button className="proBidButton">
+              APPROVE &amp; DISPATCH PRO-BIDS
+            </button>
+            <div className="microSequence">
+              <span>Spatial Capture</span>
+              <span className="arrow">→</span>
+              <span>Layout Approval</span>
+              <span className="arrow">→</span>
+              <span>Dispatched to Regional Network Nodes</span>
             </div>
           </div>
 
-          <div className="moatFeatures">
-            <div className="moatFeature">
-              <strong>🔄 Compounding Data Moat</strong>
-              <p>Every contractor correction becomes training data. Spatial precision improves over time, widening the gap from generalist AI.</p>
-            </div>
-            <div className="moatFeature">
-              <strong>🤝 Aligned Ecosystem</strong>
-              <p>Homeowners get clarity. Contractors get pre-scoped leads. AI gets smarter. Everyone wins.</p>
-            </div>
-            <div className="moatFeature">
-              <strong>📊 Defensible Position</strong>
-              <p>We own the pre-bid alignment layer—the new standard between homeowners and contractors.</p>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Why Now */}
-      <section className="whyNowSection">
-        <div className="maxWidth">
-          <h2>Why Now?</h2>
-          <p className="sectionLead">
-            Three forces converge: better AI, frustrated contractors, and inflation-weary homeowners.
-          </p>
-
-          <div className="whyNowGrid">
-            <div className="whyNowCard">
-              <h3>🤖 Frontier AI Models</h3>
-              <p>Multimodal models now infer geometry, materials, depth, and layout from a single photo with high fidelity.</p>
-              <p className="small">Photo → Structured Scope Plan is finally possible.</p>
-            </div>
-            <div className="whyNowCard">
-              <h3>🏗️ Contractor Economics</h3>
-              <p>30–40% of contractor effort wasted on unqualified leads and triage. They will engage for pre-scoped homeowners.</p>
-              <p className="small">Clear scope = faster, better bids.</p>
-            </div>
-            <div className="whyNowCard">
-              <h3>📈 Homeowner Behavior</h3>
-              <p>Inflation made opaque pricing unacceptable. Homeowners demand clarity on scope before committing capital.</p>
-              <p className="small">Equity unlock: Clarity = Confidence.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Competitive Positioning */}
-      <section className="positioningSection">
-        <div className="maxWidth">
-          <h2>Market Positioning: We Own the Alignment Layer</h2>
-
-          <div className="stackDiagram">
-            <div className="stackBox">
-              <strong>Lead-Gen Layer</strong>
-              <p className="small">Angi, Thumbtack, Houzz (low intent, high noise)</p>
-            </div>
-            <div className="stackArrow">↓</div>
-            <div className="stackBox highlight">
-              <strong>🎯 PlanDojo – Alignment Layer</strong>
-              <p className="small">Photo-to-Scope Pre-Bid Qualification (AUTHENTICATED INTENT)</p>
-            </div>
-            <div className="stackArrow">↓</div>
-            <div className="stackBox">
-              <strong>Operations Layer</strong>
-              <p className="small">Buildertrend, Joist, Procore (project execution)</p>
-            </div>
-          </div>
-
-          <div className="insightBox">
-            <p>
-              <strong>The insight:</strong> Marketplaces sell leads and hope for alignment. We sell <strong>authenticated scope</strong> and build trust. That's a different business.
-            </p>
-          </div>
-
-          <h3>Our Defensible Advantages</h3>
-          <ul className="advantageList">
-            <li>
-              <strong>Pre-Bid Intelligence:</strong> We replace "unqualified lead" with "verified scope." Contractors actually trust it.
-            </li>
-            <li>
-              <strong>Compounding Moat:</strong> Each contractor correction improves AURA's spatial precision, widening the gap from ChatGPT.
-            </li>
-            <li>
-              <strong>Zero-Friction Wedge:</strong> Homeowners get before/after clarity. Contractors get draft scope for free. Both come back.
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      {/* CTA Section */}
+      {/* CTA Waitlist Section */}
       <section className="ctaSection">
         <div className="maxWidth">
-          <h2>Join the Alignment Revolution</h2>
-          <p>Be part of the beta. Help us end renovation chaos.</p>
+          <h2>Join the Pre-Bid Standard</h2>
+          <p>End the renovation chaos before it costs your household time or unvetted overhead.</p>
           <form onSubmit={handleSubmit} className="waitlistForm ctaForm">
             <input
               type="email"
-              placeholder="Enter your email"
+              placeholder="Enter your email or phone number"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
               className="emailInput"
             />
             <button type="submit" disabled={loading} className="ctaButton">
-              {loading ? "Joining..." : "Join Waitlist"}
+              {loading ? "Initializing..." : "Initialize Scope Sequence →"}
             </button>
           </form>
-          {submitted && <p className="successMessage">✓ You're on the list!</p>}
+          {submitted && <p className="successMessage">✓ Session Initialized!</p>}
           {error && <p className="errorMessage">{error}</p>}
         </div>
       </section>
@@ -534,22 +332,20 @@ export default function Home() {
       {/* Footer */}
       <footer className="footer">
         <div className="maxWidth">
-          <p>&copy; 2026 PlanDojo. Clarity for home renovation.</p>
+          <p>&copy; 2026 PlanDojo. The Pre-Bid Alignment Layer.</p>
         </div>
       </footer>
 
+      {/* Floating System Telemetry Widget */}
       <div className="metricsWidget" aria-live="polite">
-        <div className="metricsHeading">Live engagement</div>
+        <div className="metricsHeading">Live Data Telemetry</div>
         <div className="metricsItem">
           <span className="metricsValue">{metrics.signups.toLocaleString()}</span>
-          <span className="metricsLabel">Signups</span>
+          <span className="metricsLabel">Authenticated takeoffs</span>
         </div>
         <div className="metricsItem">
           <span className="metricsValue">{metrics.visits.toLocaleString()}</span>
-          <span className="metricsLabel">Page visits</span>
-        </div>
-        <div className="metricsNote">
-          {metricsLoading ? "Updating…" : metricsError ? metricsError : "Refreshed on page load"}
+          <span className="metricsLabel">Network queries</span>
         </div>
       </div>
     </main>
