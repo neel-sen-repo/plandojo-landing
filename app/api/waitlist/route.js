@@ -25,14 +25,14 @@ export async function POST(req) {
       }]);
 
     if (error) {
+      if (error.code === '23505' || error.message?.includes('duplicate')) {
+        return Response.json({ ok: true, message: "You're already on the list — we'll be in touch." }, { status: 200 });
+      }
       console.error("Supabase error:", error);
-      return Response.json({ ok: false, error: "Database write error" }, { status: 500 });
+      return Response.json({ ok: false, error: "Something went wrong. Please try again." }, { status: 500 });
     }
 
-    return Response.json(
-      { ok: true, message: "Added to the waitlist! 🎉" }, 
-      { status: 201 }
-    );
+    return Response.json({ ok: true, message: "You're on the pilot list. We'll be in touch." }, { status: 201 });
   } catch (error) {
     console.error("[Waitlist] Internal Error:", error);
     return Response.json({ ok: false, error: "Server error. Please try again." }, { status: 500 });

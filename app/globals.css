@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Arimo", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   background-color: #fcf6e8; /* Travertine/Sand Base */
@@ -17,7 +22,12 @@ body {
 */
 .main {
   width: 100%;
+  height: 100svh;
+  overflow-y: scroll;
   overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  scroll-padding-top: 60px;
   background-color: #fcf6e8;
   
   /* Layers an elegant vector blueprint matrix (image_0.png) as a fixed backdrop on scroll */
@@ -44,11 +54,16 @@ body {
   padding: 0 20px;
 }
 
+/* Scroll snap sections */
+.snapSection {
+  scroll-snap-align: start;
+  min-height: 100svh;
+}
+
 /* Hero Section */
 .hero {
   padding: 120px 20px;
   text-align: center;
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -227,10 +242,11 @@ section h2 {
   position: relative;
   width: 100%;
   max-width: 740px;
-  margin: 32px auto 20px;
+  margin: 24px auto 16px;
   overflow: hidden;
   border-radius: 16px;
   aspect-ratio: 16 / 9;
+  max-height: min(416px, calc(100vh - 380px));
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
   border: 1px solid #e5dcbe;
   touch-action: none;
@@ -559,6 +575,123 @@ section h2 {
   user-select: none;
 }
 
+/* ===================== TOP NAV ===================== */
+.topNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: rgba(252, 246, 232, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e5dcbe;
+}
+
+.navLogo {
+  font-weight: 700;
+  font-size: 18px;
+  color: #1e293b;
+  letter-spacing: -0.5px;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navVideoButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1.5px solid #e5dcbe;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navVideoButton:hover {
+  background: #f1ebd8;
+  border-color: #c9b99a;
+}
+
+.navProButton {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navProButton:hover {
+  background: #1d4ed8;
+}
+
+/* ===================== VIDEO MODAL ===================== */
+.videoModal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+.videoModalWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  width: min(360px, 88vw);
+  cursor: default;
+}
+
+.videoModalContent {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.videoModalClose {
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.92);
+  border: none;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  transition: background 0.15s ease;
+}
+
+.videoModalClose:hover {
+  background: white;
+}
+
 /* Responsive Overrides core breakpoints */
 @media (max-width: 768px) {
   .main { background-attachment: scroll; } /* Mobile friendly fixed background rule */
@@ -571,4 +704,8 @@ section h2 {
   .actionCtaBlock { padding: 24px 16px; margin-top: 32px; }
   .microSequence { font-size: 9.5px; flex-wrap: wrap; }
   .metricsWidget { display: none; } /* Clear floating view overlays on pocket displays */
+  .videoModal { align-items: flex-end; }
+  .videoModalWrapper { width: 100%; gap: 0; align-items: center; }
+  .videoModalContent { border-radius: 16px 16px 0 0; }
+  .videoModalClose { margin-bottom: 8px; }
 }
