@@ -1,72 +1,11 @@
 "use client";
 import { useState, useRef, useEffect, useCallback } from "react";
-
-function WaitlistForm({ buttonText, className = "" }) {
-  const [email, setEmail] = useState("");
-  const [responseMessage, setResponseMessage] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!email.trim()) {
-      setError("Please enter an email");
-      return;
-    }
-
-    setLoading(true);
-    setError("");
-    setResponseMessage("");
-
-    try {
-      const res = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || "Something went wrong");
-        return;
-      }
-
-      setResponseMessage(data.message);
-      setEmail("");
-    } catch (err) {
-      setError("Network error. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className={className}>
-      <form onSubmit={handleSubmit} className="waitlistForm">
-        <input
-          type="email"
-          placeholder="Enter your email or phone number"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          disabled={loading}
-          className="emailInput"
-        />
-        <button type="submit" disabled={loading} className="ctaButton">
-          {loading ? "Checking..." : buttonText}
-        </button>
-      </form>
-      {responseMessage && <p className="successMessage">{responseMessage}</p>}
-      {error && <p className="errorMessage">{error}</p>}
-    </div>
-  );
-}
+import WaitlistForm from "../components/WaitlistForm";
 
 export default function Home() {
   const [slider, setSlider] = useState(50);
   const [dragging, setDragging] = useState(false);
-  const [metrics, setMetrics] = useState({ signups: 0, visits: 0 });
+  const [metrics, setMetrics] = useState({ homeowners: 0, pros: 0 });
   const [activeTab, setActiveTab] = useState(null); // Managed state for progressive disclosure
   const [videoOpen, setVideoOpen] = useState(false);
   const containerRef = useRef(null);
@@ -116,8 +55,8 @@ export default function Home() {
       }
       const data = await res.json();
       setMetrics({
-        signups: data.totalSignups ?? 0,
-        visits: data.visits ?? 0,
+        homeowners: data.homeownerSignups ?? 0,
+        pros: data.proSignups ?? 0,
       });
     } catch (err) {
       // Intentionally swallow error visually for metrics
@@ -137,8 +76,8 @@ export default function Home() {
       if (res.status === 200) {
         const data = await res.json();
         setMetrics({
-          signups: data.totalSignups ?? 0,
-          visits: data.visits ?? 0,
+          homeowners: data.homeownerSignups ?? 0,
+          pros: data.proSignups ?? 0,
         });
       } else {
         await fetchMetrics();
@@ -176,7 +115,7 @@ export default function Home() {
           <button className="navVideoButton" onClick={() => setVideoOpen(true)} aria-label="Watch AURA demo">
             ▶ Watch Demo
           </button>
-          <a href="mailto:pro@plandojo.io" className="navProButton">I am a Pro →</a>
+          <a href="/pro" className="navProButton">I am a Pro →</a>
         </div>
       </nav>
       <main className="main">
@@ -391,14 +330,14 @@ export default function Home() {
 
       {/* Floating System Telemetry Widget */}
       <div className="metricsWidget" aria-live="polite">
-        <div className="metricsHeading">Live Data Telemetry</div>
+        <div className="metricsHeading">Interest</div>
         <div className="metricsItem">
-          <span className="metricsValue">{metrics.signups.toLocaleString()}</span>
-          <span className="metricsLabel">Active scopes</span>
+          <span className="metricsValue">{metrics.homeowners.toLocaleString()}</span>
+          <span className="metricsLabel">Homeowners</span>
         </div>
         <div className="metricsItem">
-          <span className="metricsValue">{metrics.visits.toLocaleString()}</span>
-          <span className="metricsLabel">Homeowners reached</span>
+          <span className="metricsValue">{metrics.pros.toLocaleString()}</span>
+          <span className="metricsLabel">Contractors</span>
         </div>
       </div>
     </main>

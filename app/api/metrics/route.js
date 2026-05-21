@@ -43,14 +43,20 @@ export async function GET() {
   }
 
   try {
-    const [{ data: visitsData }, { count: totalSignups }] = await Promise.all([
+    const [
+      { data: visitsData },
+      { count: homeownerSignups },
+      { count: proSignups },
+    ] = await Promise.all([
       supabase.from('metrics').select('value').eq('id', 'visits').single(),
-      supabase.from('waitlist').select('*', { count: 'exact', head: true })
+      supabase.from('waitlist').select('*', { count: 'exact', head: true }).or('source.eq.homeowner,source.is.null'),
+      supabase.from('waitlist').select('*', { count: 'exact', head: true }).eq('source', 'pro'),
     ]);
 
     return Response.json({
       visits: visitsData ? parseInt(visitsData.value) : 0,
-      totalSignups: totalSignups || 0,
+      homeownerSignups: homeownerSignups || 0,
+      proSignups: proSignups || 0,
       lastUpdated: new Date().toISOString(),
     });
   } catch (e) {
@@ -85,12 +91,16 @@ export async function POST(req) {
 
     await supabase.from('metrics').upsert({ id: 'visits', value: newVisits });
 
-    const { count: totalSignups } = await supabase.from('waitlist').select('*', { count: 'exact', head: true });
+    const [{ count: homeownerSignups }, { count: proSignups }] = await Promise.all([
+      supabase.from('waitlist').select('*', { count: 'exact', head: true }).or('source.eq.homeowner,source.is.null'),
+      supabase.from('waitlist').select('*', { count: 'exact', head: true }).eq('source', 'pro'),
+    ]);
 
     return Response.json({
       ok: true,
       visits: newVisits,
-      totalSignups: totalSignups || 0,
+      homeownerSignups: homeownerSignups || 0,
+      proSignups: proSignups || 0,
       lastUpdated: new Date().toISOString(),
     });
   } catch (e) {

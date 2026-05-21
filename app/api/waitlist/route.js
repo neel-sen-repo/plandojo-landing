@@ -8,7 +8,7 @@ const supabase = createClient(
 
 export async function POST(req) {
   try {
-    const { email } = await req.json();
+    const { email, source = "homeowner" } = await req.json();
     const ip = req.headers.get("x-forwarded-for") || "unknown";
 
     if (!email || !email.includes("@")) {
@@ -18,9 +18,10 @@ export async function POST(req) {
     // Insert into Supabase table 'waitlist'
     const { data, error } = await supabase
       .from('waitlist')
-      .insert([{ 
-        email: email, 
-        ip: ip,
+      .insert([{
+        email,
+        ip,
+        source,
         timestamp: new Date().toISOString()
       }]);
 
