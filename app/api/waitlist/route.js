@@ -1,12 +1,7 @@
 import { access, appendFile, mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
-let geoip;
-try {
-  geoip = require("geoip-lite");
-} catch {
-  geoip = null;
-}
+
 
 const CSV_FILE = path.join(process.cwd(), "data", "waitlist.csv");
 const CSV_HEADER = [
@@ -130,9 +125,7 @@ export async function POST(req) {
     let geo = null;
     const shouldLookup = ip && !isPrivateOrLocal(ip);
 
-    if (shouldLookup && geoip) {
-      geo = geoip.lookup(ip);
-    }
+
 
     // Fallback: call a lightweight public geo IP service only when needed.
     // Use HTTPS `ipapi.co` which is reliable for simple lookups.

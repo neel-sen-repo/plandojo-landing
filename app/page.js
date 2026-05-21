@@ -1,105 +1,11 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
-export default function Home() {
-  const [slider, setSlider] = useState(50);
-  const [dragging, setDragging] = useState(false);
+function WaitlistForm({ buttonText, successMessage, className = "" }) {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [metrics, setMetrics] = useState({ signups: 0, visits: 0 });
-  const [metricsLoading, setMetricsLoading] = useState(true);
-  const [metricsError, setMetricsError] = useState("");
-  const [activeTab, setActiveTab] = useState(null); // Managed state for progressive disclosure
-  const containerRef = useRef(null);
-
-  const toggleTab = (id) => {
-    setActiveTab(activeTab === id ? null : id);
-  };
-
-  const startDrag = (e) => {
-    e?.preventDefault?.();
-    setDragging(true);
-    document.body.style.userSelect = 'none';
-    document.body.style.webkitUserSelect = 'none';
-  };
-  
-  const stopDrag = () => {
-    setDragging(false);
-    document.body.style.userSelect = '';
-    document.body.style.webkitUserSelect = '';
-  };
-
-  const onDrag = (e) => {
-    if (!dragging || !containerRef.current) return;
-
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = e.touches ? e.touches[0].clientX : e.clientX;
-    let percent = ((x - rect.left) / rect.width) * 100;
-
-    percent = Math.max(0, Math.min(100, percent));
-    setSlider(percent);
-  };
-
-  const fetchMetrics = async () => {
-    try {
-      const res = await fetch("/api/metrics");
-      if (!res.ok) {
-        throw new Error("Failed to load metrics");
-      }
-      const data = await res.json();
-      setMetrics({
-        signups: data.totalSignups ?? 0,
-        visits: data.visits ?? 0,
-      });
-    } catch (err) {
-      setMetricsError("Unable to load stats");
-    } finally {
-      setMetricsLoading(false);
-    }
-  };
-
-  const recordVisit = async () => {
-    try {
-      const res = await fetch("/api/metrics", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (res.status === 200) {
-        const data = await res.json();
-        setMetrics({
-          signups: data.totalSignups ?? 0,
-          visits: data.visits ?? 0,
-        });
-      } else {
-        await fetchMetrics();
-      }
-    } catch (err) {
-      setMetricsError("Unable to load stats");
-    } finally {
-      setMetricsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("mousemove", onDrag);
-    window.addEventListener("touchmove", onDrag);
-    window.addEventListener("mouseup", stopDrag);
-    window.addEventListener("touchend", stopDrag);
-
-    return () => {
-      window.removeEventListener("mousemove", onDrag);
-      window.removeEventListener("touchmove", onDrag);
-      window.removeEventListener("mouseup", stopDrag);
-      window.removeEventListener("touchend", stopDrag);
-    };
-  }, [dragging]);
-
-  useEffect(() => {
-    recordVisit();
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -138,6 +44,130 @@ export default function Home() {
   };
 
   return (
+    <div className={className}>
+      <form onSubmit={handleSubmit} className="waitlistForm">
+        <input
+          type="email"
+          placeholder="Enter your email or phone number"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={loading}
+          className="emailInput"
+        />
+        <button type="submit" disabled={loading} className="ctaButton">
+          {loading ? "Checking..." : buttonText}
+        </button>
+      </form>
+      {submitted && <p className="successMessage">{successMessage}</p>}
+      {error && <p className="errorMessage">{error}</p>}
+    </div>
+  );
+}
+
+export default function Home() {
+  const [slider, setSlider] = useState(50);
+  const [dragging, setDragging] = useState(false);
+  const [metrics, setMetrics] = useState({ signups: 0, visits: 0 });
+  const [activeTab, setActiveTab] = useState(null); // Managed state for progressive disclosure
+  const containerRef = useRef(null);
+  const visitRecordedRef = useRef(false);
+
+  const toggleTab = (id) => {
+    setActiveTab(activeTab === id ? null : id);
+  };
+
+  const startDrag = (e) => {
+    e?.preventDefault?.();
+    setDragging(true);
+    document.body.style.userSelect = 'none';
+    document.body.style.webkitUserSelect = 'none';
+  };
+  
+  const stopDrag = useCallback(() => {
+    setDragging(false);
+    document.body.style.userSelect = '';
+    document.body.style.webkitUserSelect = '';
+  }, []);
+
+  const onDrag = useCallback((e) => {
+    if (!dragging || !containerRef.current) return;
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    let percent = ((x - rect.left) / rect.width) * 100;
+
+    percent = Math.max(0, Math.min(100, percent));
+    setSlider(percent);
+  }, [dragging]);
+
+  const handleSliderKeyDown = (e) => {
+    if (e.key === "ArrowLeft") {
+      setSlider((prev) => Math.max(0, prev - 5));
+    } else if (e.key === "ArrowRight") {
+      setSlider((prev) => Math.min(100, prev + 5));
+    }
+  };
+
+  const fetchMetrics = async () => {
+    try {
+      const res = await fetch("/api/metrics");
+      if (!res.ok) {
+        throw new Error("Failed to load metrics");
+      }
+      const data = await res.json();
+      setMetrics({
+        signups: data.totalSignups ?? 0,
+        visits: data.visits ?? 0,
+      });
+    } catch (err) {
+      // Intentionally swallow error visually for metrics
+    }
+  };
+
+  const recordVisit = useCallback(async () => {
+    if (visitRecordedRef.current) return;
+    visitRecordedRef.current = true;
+
+    try {
+      const res = await fetch("/api/metrics", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (res.status === 200) {
+        const data = await res.json();
+        setMetrics({
+          signups: data.totalSignups ?? 0,
+          visits: data.visits ?? 0,
+        });
+      } else {
+        await fetchMetrics();
+      }
+    } catch (err) {
+      // Intentionally swallow error visually for metrics
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!dragging) return;
+    window.addEventListener("mousemove", onDrag);
+    window.addEventListener("touchmove", onDrag);
+    window.addEventListener("mouseup", stopDrag);
+    window.addEventListener("touchend", stopDrag);
+
+    return () => {
+      window.removeEventListener("mousemove", onDrag);
+      window.removeEventListener("touchmove", onDrag);
+      window.removeEventListener("mouseup", stopDrag);
+      window.removeEventListener("touchend", stopDrag);
+    };
+  }, [dragging, onDrag, stopDrag]);
+
+  useEffect(() => {
+    recordVisit();
+  }, [recordVisit]);
+
+  return (
     <main className="main">
       {/* Hero Section */}
       <header className="hero">
@@ -147,21 +177,10 @@ export default function Home() {
           <p className="heroSubtitle">
             Photos to a precise baseline project scope in 60 seconds. Directly over text. No apps to download, no cognitive overload.
           </p>
-          <form onSubmit={handleSubmit} className="waitlistForm">
-            <input
-              type="email"
-              placeholder="Enter your email or phone number"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={loading}
-              className="emailInput"
-            />
-            <button type="submit" disabled={loading} className="ctaButton">
-              {loading ? "Initializing..." : "Initialize Scope Sequence →"}
-            </button>
-          </form>
-          {submitted && <p className="successMessage">✓ Session Initialized! Check your messaging thread.</p>}
-          {error && <p className="errorMessage">{error}</p>}
+          <WaitlistForm 
+            buttonText="I am interested"
+            successMessage="Successful add to interest list!"
+          />
         </div>
       </header>
 
@@ -174,6 +193,13 @@ export default function Home() {
           <div
             className="sliderWrapper"
             ref={containerRef}
+            role="slider"
+            tabIndex={0}
+            aria-valuenow={Math.round(slider)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Before and after renovation slider"
+            onKeyDown={handleSliderKeyDown}
             onMouseDown={(e) => startDrag(e)}
             onTouchStart={(e) => startDrag(e)}
             onDragStart={(e) => e.preventDefault()}
@@ -311,21 +337,11 @@ export default function Home() {
         <div className="maxWidth">
           <h2>Join the Pre-Bid Standard</h2>
           <p>End the renovation chaos before it costs your household time or unvetted overhead.</p>
-          <form onSubmit={handleSubmit} className="waitlistForm ctaForm">
-            <input
-              type="email"
-              placeholder="Enter your email or phone number"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={loading}
-              className="emailInput"
-            />
-            <button type="submit" disabled={loading} className="ctaButton">
-              {loading ? "Initializing..." : "Initialize Scope Sequence →"}
-            </button>
-          </form>
-          {submitted && <p className="successMessage">✓ Session Initialized!</p>}
-          {error && <p className="errorMessage">{error}</p>}
+          <WaitlistForm 
+            className="ctaForm"
+            buttonText="I am interested"
+            successMessage="Successful add to interest list!"
+          />
         </div>
       </section>
 
