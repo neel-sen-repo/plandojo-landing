@@ -371,11 +371,11 @@ export default function Home() {
         <div className="metricsHeading">Live Data Telemetry</div>
         <div className="metricsItem">
           <span className="metricsValue">{metrics.signups.toLocaleString()}</span>
-          <span className="metricsLabel">Authenticated takeoffs</span>
+          <span className="metricsLabel">participants in waitlist</span>
         </div>
         <div className="metricsItem">
           <span className="metricsValue">{metrics.visits.toLocaleString()}</span>
-          <span className="metricsLabel">Network queries</span>
+          <span className="metricsLabel">page visits today</span>
         </div>
       </div>
     </main>
