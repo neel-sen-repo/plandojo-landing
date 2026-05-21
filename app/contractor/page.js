@@ -60,7 +60,7 @@ export default function ProPage() {
       <nav className="topNav">
         <span className="navLogo">
           Plan<span style={{ color: "#2563eb" }}>Dojo</span>
-          <span style={{ marginLeft: "8px", fontSize: "11px", fontFamily: "monospace", color: "#64748b", fontWeight: "600", textTransform: "uppercase", letterSpacing: "1px" }}>Pro</span>
+          <span style={{ marginLeft: "8px", fontSize: "11px", fontFamily: "monospace", color: "#64748b", fontWeight: "600", textTransform: "uppercase", letterSpacing: "1px" }}>Contractor</span>
         </span>
         <div className="navActions">
           <a href="/" className="navVideoButton" style={{ textDecoration: "none" }}>For Homeowners →</a>
@@ -73,7 +73,7 @@ export default function ProPage() {
         <header className="hero snapSection" style={{ paddingTop: "64px", paddingBottom: "20px" }}>
           <div className="heroContent" style={{ maxWidth: "800px" }}>
 
-            <div className="badge">Contractor Pro Beta</div>
+            <div className="badge">Contractor Beta</div>
 
             <h1 style={{ fontSize: "52px", fontWeight: "700", marginBottom: "20px", color: "#1e293b", lineHeight: "1.15", letterSpacing: "-1.2px" }}>
               This homeowner arrived pre-aligned.<br />No triage. No confusion.
@@ -106,11 +106,13 @@ export default function ProPage() {
                 <div className="handleLine"></div>
                 <div className="handleCircle"></div>
               </div>
+              <div className="sliderLabel before">Before</div>
+              <div className="sliderLabel after">After</div>
             </div>
 
             <div className="heroCtas" style={{ flexDirection: "row", justifyContent: "center", flexWrap: "wrap", gap: "16px" }}>
               <WaitlistForm
-                buttonText="Join Contractor Pro Beta"
+                buttonText="Join Contractor Beta"
                 source="pro"
               />
               <button
@@ -251,24 +253,25 @@ export default function ProPage() {
           <section style={{ textAlign: "center", padding: "80px 20px 60px" }}>
             <div className="maxWidth">
               <h2>How It Works</h2>
-              <p className="sectionLead" style={{ maxWidth: "560px", margin: "16px auto 48px" }}>
+              <p className="sectionLead" style={{ maxWidth: "560px", margin: "16px auto 0" }}>
                 PlanDojo does the pre-work. You do the skilled work.
               </p>
-              <div style={{ display: "flex", gap: "0px", justifyContent: "center", flexWrap: "wrap", maxWidth: "800px", margin: "0 auto" }}>
-                {[
-                  { step: "1", title: "Homeowner uploads photos", desc: "They photograph the space directly over messaging — no app download." },
-                  { step: "2", title: "PlanDojo drafts the scope", desc: "AURA generates geometry, materials, timeline, and a baseline budget range." },
-                  { step: "3", title: "You verify on site", desc: "Show up to a homeowner who already knows what they want and what it costs." },
-                  { step: "4", title: "You quote faster", desc: "No education. No expectation resetting. Just your expertise applied to a clean brief." },
-                ].map(({ step, title, desc }, i, arr) => (
-                  <div key={step} style={{ display: "flex", alignItems: "flex-start", gap: "16px", flex: "1", minWidth: "280px", padding: "20px", position: "relative" }}>
-                    <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "#2563eb", color: "white", fontWeight: "800", fontSize: "15px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: "0" }}>{step}</div>
-                    <div style={{ textAlign: "left" }}>
-                      <div style={{ fontWeight: "700", fontSize: "16px", color: "#1e293b", marginBottom: "6px" }}>{title}</div>
-                      <div style={{ fontSize: "14px", color: "#475569", lineHeight: "1.6" }}>{desc}</div>
-                    </div>
-                  </div>
-                ))}
+              <div style={{ display: "flex", gap: "24px", justifyContent: "center", marginTop: "48px", flexWrap: "wrap" }}>
+                <div className="stepCard" style={{ flex: "1", minWidth: "220px", maxWidth: "300px", padding: "20px", border: "1px solid #e5dcbe", borderRadius: "16px", background: "rgba(255,255,255,0.94)", textAlign: "left" }}>
+                  <img src="/before.jpg" className="stepThumb" alt="Homeowner uploads a photo of their space" />
+                  <h3 style={{ fontSize: "18px", marginBottom: "8px", color: "#1e293b" }}>1. Homeowner uploads photos</h3>
+                  <p style={{ color: "#475569", fontSize: "15px" }}>They photograph the space — no app download required.</p>
+                </div>
+                <div className="stepCard" style={{ flex: "1", minWidth: "220px", maxWidth: "300px", padding: "20px", border: "1px solid #e5dcbe", borderRadius: "16px", background: "rgba(255,255,255,0.94)", textAlign: "left" }}>
+                  <img src="/plan-sample.jpg" className="stepThumb" alt="PlanDojo generates a structured scope sheet" />
+                  <h3 style={{ fontSize: "18px", marginBottom: "8px", color: "#1e293b" }}>2. PlanDojo drafts the scope</h3>
+                  <p style={{ color: "#475569", fontSize: "15px" }}>AURA generates geometry, materials, timeline, and a baseline budget range.</p>
+                </div>
+                <div className="stepCard" style={{ flex: "1", minWidth: "220px", maxWidth: "300px", padding: "20px", border: "1px solid #e5dcbe", borderRadius: "16px", background: "rgba(255,255,255,0.94)", textAlign: "left" }}>
+                  <img src="/after.jpg" className="stepThumb" alt="The target renovation look the homeowner already approved" />
+                  <h3 style={{ fontSize: "18px", marginBottom: "8px", color: "#1e293b" }}>3. You show up pre-aligned</h3>
+                  <p style={{ color: "#475569", fontSize: "15px" }}>No education. No expectation resetting. Just your expertise applied to a clean brief.</p>
+                </div>
               </div>
             </div>
           </section>
@@ -276,11 +279,11 @@ export default function ProPage() {
           {/* Final CTA */}
           <section className="ctaSection">
             <div className="maxWidth">
-              <h2>Join Contractor Pro Beta</h2>
+              <h2>Join Contractor Beta</h2>
               <p>Be first to receive pre-aligned homeowner leads. No triage. No wasted site visits.</p>
               <WaitlistForm
                 className="ctaForm"
-                buttonText="Join Contractor Pro Beta"
+                buttonText="Join Contractor Beta"
                 source="pro"
               />
             </div>

@@ -6,14 +6,9 @@ export default function Home() {
   const [slider, setSlider] = useState(50);
   const [dragging, setDragging] = useState(false);
   const [metrics, setMetrics] = useState({ homeowners: 0, pros: 0 });
-  const [activeTab, setActiveTab] = useState(null); // Managed state for progressive disclosure
   const [videoOpen, setVideoOpen] = useState(false);
   const containerRef = useRef(null);
   const visitRecordedRef = useRef(false);
-
-  const toggleTab = (id) => {
-    setActiveTab(activeTab === id ? null : id);
-  };
 
   const startDrag = (e) => {
     e?.preventDefault?.();
@@ -112,10 +107,7 @@ export default function Home() {
       <nav className="topNav">
         <span className="navLogo">Plan<span style={{ color: '#2563eb' }}>Dojo</span></span>
         <div className="navActions">
-          <button className="navVideoButton" onClick={() => setVideoOpen(true)} aria-label="Watch AURA demo">
-            ▶ Watch Demo
-          </button>
-          <a href="/pro" className="navProButton">I am a Pro →</a>
+          <a href="/contractor" className="navProButton">I am a Contractor →</a>
         </div>
       </nav>
       <main className="main">
@@ -150,15 +142,18 @@ export default function Home() {
               <div className="handleLine"></div>
               <div className="handleCircle"></div>
             </div>
+            <div className="sliderLabel before">Before</div>
+            <div className="sliderLabel after">After</div>
           </div>
 
           <div className="heroCtas" style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: '20px' }}>
-            <button className="ctaButton" onClick={() => document.getElementById('demo-section')?.scrollIntoView({ behavior: 'smooth' })}>Walk Through This Example</button>
+            <button className="ctaButtonSecondary" onClick={() => setVideoOpen(true)}>▶ Watch Demo</button>
+            <button className="ctaButton" onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}>How It Works</button>
           </div>
         </div>
       </header>
 
-      <div className="snapSection">
+      <div className="snapSection" id="how-it-works">
       {/* 2. WAITLIST SECTION */}
       <section className="ctaSection" style={{ padding: '60px 20px', background: '#1e293b' }}>
         <div className="maxWidth">
@@ -174,18 +169,21 @@ export default function Home() {
       <section className="howItWorksSection" style={{ textAlign: 'center', padding: '80px 20px' }}>
         <div className="maxWidth">
           <h2>How It Works</h2>
-          <div className="stepsGrid" style={{ display: 'flex', gap: '24px', justifyContent: 'center', marginTop: '48px', flexWrap: 'wrap' }}>
-            <div className="stepCard" style={{ flex: '1', minWidth: '250px', padding: '40px 24px', border: '1px solid #e5dcbe', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.94)', boxShadow: '0 10px 30px rgba(68, 64, 60, 0.02)' }}>
-              <h3 style={{ fontSize: '20px', marginBottom: '12px', color: '#1e293b' }}>1. Upload a photo</h3>
-              <p style={{ color: '#475569', fontSize: '16px' }}>Snap a picture of your current space.</p>
+          <div style={{ display: 'flex', gap: '24px', justifyContent: 'center', marginTop: '48px', flexWrap: 'wrap' }}>
+            <div className="stepCard" style={{ flex: '1', minWidth: '220px', maxWidth: '300px', padding: '20px', border: '1px solid #e5dcbe', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.94)', textAlign: 'left' }}>
+              <img src="/before.jpg" className="stepThumb" alt="Upload a photo of your space" />
+              <h3 style={{ fontSize: '18px', marginBottom: '8px', color: '#1e293b' }}>1. Upload a photo</h3>
+              <p style={{ color: '#475569', fontSize: '15px' }}>Snap a picture of your current space.</p>
             </div>
-            <div className="stepCard" style={{ flex: '1', minWidth: '250px', padding: '40px 24px', border: '1px solid #e5dcbe', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.94)', boxShadow: '0 10px 30px rgba(68, 64, 60, 0.02)' }}>
-              <h3 style={{ fontSize: '20px', marginBottom: '12px', color: '#1e293b' }}>2. See your After look</h3>
-              <p style={{ color: '#475569', fontSize: '16px' }}>Get a visual transformation instantly.</p>
+            <div className="stepCard" style={{ flex: '1', minWidth: '220px', maxWidth: '300px', padding: '20px', border: '1px solid #e5dcbe', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.94)', textAlign: 'left' }}>
+              <img src="/after.jpg" className="stepThumb" alt="See your renovated after look" />
+              <h3 style={{ fontSize: '18px', marginBottom: '8px', color: '#1e293b' }}>2. See your After look</h3>
+              <p style={{ color: '#475569', fontSize: '15px' }}>Get a visual transformation instantly.</p>
             </div>
-            <div className="stepCard" style={{ flex: '1', minWidth: '250px', padding: '40px 24px', border: '1px solid #e5dcbe', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.94)', boxShadow: '0 10px 30px rgba(68, 64, 60, 0.02)' }}>
-              <h3 style={{ fontSize: '20px', marginBottom: '12px', color: '#1e293b' }}>3. Get a Draft Plan</h3>
-              <p style={{ color: '#475569', fontSize: '16px' }}>Receive a structured scope for your project.</p>
+            <div className="stepCard" style={{ flex: '1', minWidth: '220px', maxWidth: '300px', padding: '20px', border: '1px solid #e5dcbe', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.94)', textAlign: 'left' }}>
+              <img src="/plan-sample.jpg" className="stepThumb" alt="Get a structured draft plan" />
+              <h3 style={{ fontSize: '18px', marginBottom: '8px', color: '#1e293b' }}>3. Get a Draft Plan</h3>
+              <p style={{ color: '#475569', fontSize: '15px' }}>Receive a structured scope for your project.</p>
             </div>
           </div>
         </div>
@@ -206,105 +204,6 @@ export default function Home() {
               <span style={{ marginRight: '12px' }}>✅</span> Align before talking to contractors
             </li>
           </ul>
-        </div>
-      </section>
-
-      </div>
-
-      <div className="snapSection" id="demo-section">
-      {/* 5. REMAINING SECTIONS */}
-      {/* Your Project Coordination Center - Progressive Disclosure Interface */}
-      <section className="sampleProjectSection">
-        <div className="maxWidth">
-          <h2>Your Project Coordination Center</h2>
-          <p className="sectionLead">
-            AURA instantly parses raw environmental photos into highly structured spatial constraints. Open a configuration layer below to verify your telemetry data.
-          </p>
-
-          <div className="accordionWrapper" role="tablist">
-            
-            {/* PANEL 1: GEOMETRY */}
-            <div className="accordionItem">
-              <button className="accordionHeader" role="tab" aria-expanded={activeTab === 1} aria-controls="panel-1" onClick={() => toggleTab(1)}>
-                <span>📐 Verified Geometry &amp; Spatial Constraints</span>
-                <span className="accordionIndicator">{activeTab === 1 ? "−" : "+"}</span>
-              </button>
-              {activeTab === 1 && (
-                <div className="accordionContent" role="tabpanel" id="panel-1">
-                  <p className="planNote">Raw physical parameters extracted from camera feeds and map vectors.</p>
-                  <ul className="planList">
-                    <li>Verified 36" countertop height baseline parameters.</li>
-                    <li>Backsplash configuration runs cleanly along primary wall and wraps left side of window return structure.</li>
-                    <li>Existing grout matrices evaluated at uniform ⅛" runtime bounds.</li>
-                    <li>Substrate Base: Drywall (stable classification, standard preparation profile).</li>
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            {/* PANEL 2: SCOPE */}
-            <div className="accordionItem">
-              <button className="accordionHeader" role="tab" aria-expanded={activeTab === 2} aria-controls="panel-2" onClick={() => toggleTab(2)}>
-                <span>📋 Proposed Technical Scope Matrix</span>
-                <span className="accordionIndicator">{activeTab === 2 ? "−" : "+"}</span>
-              </button>
-              {activeTab === 2 && (
-                <div className="accordionContent" role="tabpanel" id="panel-2">
-                  <p className="planNote">Automated operational checklist translated for cross-ecosystem contractor compliance.</p>
-                  <ul className="planList">
-                    <li>Extract existing tile arrays and clear compound adhesive residues.</li>
-                    <li>Prepare underlying substrate base: clean, plane level, and apply structural primer.</li>
-                    <li>Set uniform new subway tile pattern layout with ⅛" precision joint lines.</li>
-                    <li>Apply high-durability moisture barrier grout sealant per manufacturer specifications.</li>
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            {/* PANEL 3: TIMELINE & BUDGET */}
-            <div className="accordionItem">
-              <button className="accordionHeader" role="tab" aria-expanded={activeTab === 3} aria-controls="panel-3" onClick={() => toggleTab(3)}>
-                <span>⏳ Estimated Timeline &amp; Budget Baselines</span>
-                <span className="accordionIndicator">{activeTab === 3 ? "−" : "+"}</span>
-              </button>
-              {activeTab === 3 && (
-                <div className="accordionContent" role="tabpanel" id="panel-3">
-                  <p className="planNote">Resource distribution variables mapped against localized labor nodes.</p>
-                  <div className="budgetTable">
-                    <div className="budgetRow">
-                      <span>Phase 1: Demolition &amp; Substrate Base Prep</span>
-                      <strong>4–6 Hours</strong>
-                    </div>
-                    <div className="budgetRow">
-                      <span>Phase 2: Tile Installation Matrix &amp; Grouting</span>
-                      <strong>8–10 Hours</strong>
-                    </div>
-                    <div className="budgetRow highlighted">
-                      <span>Total Estimated Construction Runtime</span>
-                      <span>14–18 Hours</span>
-                    </div>
-                  </div>
-                  <div className="budgetTable" style={{ marginTop: "12px" }}>
-                    <div className="budgetRow">
-                      <span>Raw Material Estimates (Tile, Grout, Compounds)</span>
-                      <strong>$800 - $1,200</strong>
-                    </div>
-                    <div className="budgetRow">
-                      <span>Localized Labor Allocation Baseline</span>
-                      <strong>$2,400 - $3,200</strong>
-                    </div>
-                    <div className="budgetRow highlighted">
-                      <span>Total Pre-Bid Baseline Assessment</span>
-                      <span>$3,400 - $4,800</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-          </div>
-
-
         </div>
       </section>
 

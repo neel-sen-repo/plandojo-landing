@@ -120,6 +120,7 @@ body {
   border: 2px solid #e5dcbe;
   border-radius: 8px;
   font-size: 16px;
+  line-height: 1.5;
   transition: all 0.25s ease;
   background: rgba(255, 255, 255, 0.9);
   color: #1e293b;
@@ -136,10 +137,11 @@ body {
   padding: 14px 32px;
   background: #2563eb;
   color: white;
-  border: none;
+  border: 2px solid transparent;
   border-radius: 8px;
   font-weight: 700;
   font-size: 16px;
+  line-height: 1.5;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
@@ -149,6 +151,26 @@ body {
   background: #1d4ed8;
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.ctaButtonSecondary {
+  padding: 14px 32px;
+  background: white;
+  color: #2563eb;
+  border: 2px solid #2563eb;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+}
+
+.ctaButtonSecondary:hover {
+  background: #eff6ff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.15);
 }
 
 .ctaButton:disabled {
@@ -299,16 +321,58 @@ section h2 {
 }
 
 .sliderLabel {
-  display: flex;
-  justify-content: space-between;
-  max-width: 740px;
-  margin: 16px auto 0;
-  font-family: monospace;
-  font-size: 12px;
-  color: #64748b;
+  position: absolute;
+  top: 12px;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.85);
+  color: #1e293b;
+  font-size: 11px;
   font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+  user-select: none;
+}
+.sliderLabel.before { left: 12px; }
+.sliderLabel.after  { right: 12px; }
+
+.howItWorksLayout {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+.stepThumb {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #e5dcbe;
+  display: block;
+}
+.howItWorksVideo {
+  width: 220px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e5dcbe;
+  box-shadow: 0 10px 30px rgba(68, 64, 60, 0.08);
+  background: #0f172a;
+}
+.howItWorksVideo video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media (max-width: 768px) {
+  .howItWorksLayout { flex-direction: column; align-items: center; }
+  .howItWorksVideo { width: 100%; max-width: 360px; }
 }
 
 .sliderNote {
