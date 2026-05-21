@@ -1,0 +1,22 @@
+
+> plandojo-landing@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.50.167:3000
+✓ Ready in 380ms
+Creating turbopack project { dir: '/Users/nsen/PlanDojo/plandojo-landing', testMode: true }
+
+ GET / 200 in 264ms (next.js: 140ms, application-code: 124ms)
+ POST /api/metrics 200 in 67ms (next.js: 43ms, application-code: 24ms)
+[Waitlist] Signup successful: test4@example.com
+ POST /api/waitlist 201 in 26ms (next.js: 19ms, application-code: 7ms)
+✓ Compiled in 174ms
+✓ Compiled in 70ms
+ GET / 200 in 74ms (next.js: 23ms, application-code: 51ms)
+ POST /api/metrics 200 in 11ms (next.js: 3ms, application-code: 8ms)
+✓ Compiled in 49ms
+ GET / 200 in 46ms (next.js: 7ms, application-code: 39ms)
+ POST /api/metrics 200 in 8ms (next.js: 1744µs, application-code: 6ms)
+[?25h

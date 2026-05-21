@@ -177,10 +177,24 @@ export default function Home() {
           <p className="heroSubtitle">
             Photos to a precise baseline project scope in 60 seconds. Directly over text. No apps to download, no cognitive overload.
           </p>
-          <WaitlistForm 
-            buttonText="I am interested"
-            successMessage="Successful add to interest list!"
-          />
+          <div className="heroCtas">
+            <WaitlistForm 
+              buttonText="I am interested"
+              successMessage="Successful add to interest list!"
+            />
+            <a 
+              href="/plandojo-mobile-demo.mp4" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="demoVideoButton"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polygon points="10 8 16 12 10 16 10 8"></polygon>
+              </svg>
+              Watch the 60s demo
+            </a>
+          </div>
         </div>
       </header>
 

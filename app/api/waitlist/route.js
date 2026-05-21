@@ -55,12 +55,13 @@ async function getExistingEmails() {
 
 export async function POST(req) {
   try {
-    const { email } = await req.json();
+    const body = await req.json();
+    const email = body.email;
 
     // Validation
-    if (!email) {
+    if (!email || typeof email !== "string") {
       return Response.json(
-        { ok: false, error: "Email is required" },
+        { ok: false, error: "Email is required and must be a valid string" },
         { status: 400 }
       );
     }
@@ -165,6 +166,10 @@ export async function POST(req) {
 
     // Save to CSV
     const csvLine = Object.values(row).map(csvEscape).join(",") + "\n";
+    
+    // Ensure the file is ready right before writing, to handle potential race conditions
+    // where the directory might have been removed, or if getExistingEmails silently failed.
+    await ensureCsvFile();
     await appendFile(CSV_FILE, csvLine, "utf8");
 
     console.log("[Waitlist] Signup successful:", row.email);
@@ -178,6 +183,27 @@ export async function POST(req) {
     );
   } catch (error) {
     console.error("[Waitlist] Error:", error);
+    
+    // Provide a more specific error message if it's a file system issue
+    if (error.code === 'EACCES' || error.code === 'EPERM') {
+      return Response.json(
+        { ok: false, error: "Server configuration error: Permission denied when saving data." },
+        { status: 500 }
+      );
+    }
+    if (error.code === 'EROFS') {
+      return Response.json(
+        { ok: false, error: "Server configuration error: Read-only file system. Cannot save data." },
+        { status: 500 }
+      );
+    }
+    if (error.code === 'EBUSY') {
+      return Response.json(
+        { ok: false, error: "Server error: Database file is locked. Please try again." },
+        { status: 500 }
+      );
+    }
+
     return Response.json(
       { ok: false, error: "Server error. Please try again." },
       { status: 500 }
