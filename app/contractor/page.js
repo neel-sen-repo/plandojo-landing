@@ -71,15 +71,15 @@ export default function ProPage() {
 
         {/* SECTION 1 — HERO */}
         <header className="hero snapSection" style={{ paddingTop: "64px", paddingBottom: "20px" }}>
-          <div className="heroContent" style={{ maxWidth: "800px" }}>
+          <div className="heroContent" style={{ maxWidth: "1000px" }}>
 
             <div className="badge">Contractor Beta</div>
 
-            <h1 style={{ fontSize: "52px", fontWeight: "700", marginBottom: "20px", color: "#1e293b", lineHeight: "1.15", letterSpacing: "-1.2px" }}>
+            <h1>
               This homeowner arrived pre-aligned.<br />No triage. No confusion.
             </h1>
 
-            <p className="heroSubtitle" style={{ fontSize: "22px", fontWeight: "500" }}>
+            <p className="heroSubtitle" style={{ fontSize: "18px", fontWeight: "500" }}>
               PlanDojo generates a structured draft scope before you ever step on site.
             </p>
 
@@ -110,14 +110,13 @@ export default function ProPage() {
               <div className="sliderLabel after">After</div>
             </div>
 
-            <div className="heroCtas" style={{ flexDirection: "row", justifyContent: "center", flexWrap: "wrap", gap: "16px" }}>
+            <div className="heroCtas">
               <WaitlistForm
                 buttonText="Join Contractor Beta"
                 source="pro"
               />
               <button
-                className="navVideoButton"
-                style={{ padding: "14px 24px", fontSize: "15px" }}
+                className="ctaButtonSecondary"
                 onClick={() => document.getElementById("scope-section")?.scrollIntoView({ behavior: "smooth" })}
               >
                 See the Draft Scope Example ↓
@@ -257,17 +256,17 @@ export default function ProPage() {
                 PlanDojo does the pre-work. You do the skilled work.
               </p>
               <div style={{ display: "flex", gap: "24px", justifyContent: "center", marginTop: "48px", flexWrap: "wrap" }}>
-                <div className="stepCard" style={{ flex: "1", minWidth: "220px", maxWidth: "300px", padding: "20px", border: "1px solid #e5dcbe", borderRadius: "16px", background: "rgba(255,255,255,0.94)", textAlign: "left" }}>
+                <div className="stepCard" style={{ flex: "1", minWidth: "220px", maxWidth: "375px", padding: "20px", border: "1px solid #e5dcbe", borderRadius: "16px", background: "rgba(255,255,255,0.94)", textAlign: "left" }}>
                   <img src="/before.jpg" className="stepThumb" alt="Homeowner uploads a photo of their space" />
                   <h3 style={{ fontSize: "18px", marginBottom: "8px", color: "#1e293b" }}>1. Homeowner uploads photos</h3>
                   <p style={{ color: "#475569", fontSize: "15px" }}>They photograph the space — no app download required.</p>
                 </div>
-                <div className="stepCard" style={{ flex: "1", minWidth: "220px", maxWidth: "300px", padding: "20px", border: "1px solid #e5dcbe", borderRadius: "16px", background: "rgba(255,255,255,0.94)", textAlign: "left" }}>
+                <div className="stepCard" style={{ flex: "1", minWidth: "220px", maxWidth: "375px", padding: "20px", border: "1px solid #e5dcbe", borderRadius: "16px", background: "rgba(255,255,255,0.94)", textAlign: "left" }}>
                   <img src="/plan-sample.jpg" className="stepThumb" alt="PlanDojo generates a structured scope sheet" />
                   <h3 style={{ fontSize: "18px", marginBottom: "8px", color: "#1e293b" }}>2. PlanDojo drafts the scope</h3>
                   <p style={{ color: "#475569", fontSize: "15px" }}>AURA generates geometry, materials, timeline, and a baseline budget range.</p>
                 </div>
-                <div className="stepCard" style={{ flex: "1", minWidth: "220px", maxWidth: "300px", padding: "20px", border: "1px solid #e5dcbe", borderRadius: "16px", background: "rgba(255,255,255,0.94)", textAlign: "left" }}>
+                <div className="stepCard" style={{ flex: "1", minWidth: "220px", maxWidth: "375px", padding: "20px", border: "1px solid #e5dcbe", borderRadius: "16px", background: "rgba(255,255,255,0.94)", textAlign: "left" }}>
                   <img src="/after.jpg" className="stepThumb" alt="The target renovation look the homeowner already approved" />
                   <h3 style={{ fontSize: "18px", marginBottom: "8px", color: "#1e293b" }}>3. You show up pre-aligned</h3>
                   <p style={{ color: "#475569", fontSize: "15px" }}>No education. No expectation resetting. Just your expertise applied to a clean brief.</p>

@@ -113,10 +113,11 @@ export default function Home() {
       <main className="main">
       {/* 1. HERO SECTION (NEW) */}
       <header className="hero snapSection" style={{ paddingBottom: '20px', paddingTop: '64px' }}>
-        <div className="heroContent" style={{ maxWidth: '800px' }}>
+        <div className="heroContent" style={{ maxWidth: '1000px' }}>
           <h1>See Your Renovation Before You Commit.</h1>
-          <h2 className="heroSubtitle" style={{ fontSize: '24px', fontWeight: '500' }}>
-            This homeowner got clarity in under 60 seconds.
+          <h2 className="heroSubtitle" style={{ fontSize: '18px', fontWeight: '500' }}>
+            This couple struggled to pick a tile for their kitchen backsplash.<br />
+            They both got complete clarity in under 60 seconds.
           </h2>
 
           <div
@@ -146,7 +147,7 @@ export default function Home() {
             <div className="sliderLabel after">After</div>
           </div>
 
-          <div className="heroCtas" style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: '20px' }}>
+          <div className="heroCtas">
             <button className="ctaButtonSecondary" onClick={() => setVideoOpen(true)}>▶ Watch Demo</button>
             <button className="ctaButton" onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}>How It Works</button>
           </div>
@@ -170,17 +171,17 @@ export default function Home() {
         <div className="maxWidth">
           <h2>How It Works</h2>
           <div style={{ display: 'flex', gap: '24px', justifyContent: 'center', marginTop: '48px', flexWrap: 'wrap' }}>
-            <div className="stepCard" style={{ flex: '1', minWidth: '220px', maxWidth: '300px', padding: '20px', border: '1px solid #e5dcbe', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.94)', textAlign: 'left' }}>
+            <div className="stepCard" style={{ flex: '1', minWidth: '220px', maxWidth: '375px', padding: '20px', border: '1px solid #e5dcbe', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.94)', textAlign: 'left' }}>
               <img src="/before.jpg" className="stepThumb" alt="Upload a photo of your space" />
               <h3 style={{ fontSize: '18px', marginBottom: '8px', color: '#1e293b' }}>1. Upload a photo</h3>
               <p style={{ color: '#475569', fontSize: '15px' }}>Snap a picture of your current space.</p>
             </div>
-            <div className="stepCard" style={{ flex: '1', minWidth: '220px', maxWidth: '300px', padding: '20px', border: '1px solid #e5dcbe', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.94)', textAlign: 'left' }}>
+            <div className="stepCard" style={{ flex: '1', minWidth: '220px', maxWidth: '375px', padding: '20px', border: '1px solid #e5dcbe', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.94)', textAlign: 'left' }}>
               <img src="/after.jpg" className="stepThumb" alt="See your renovated after look" />
               <h3 style={{ fontSize: '18px', marginBottom: '8px', color: '#1e293b' }}>2. See your After look</h3>
               <p style={{ color: '#475569', fontSize: '15px' }}>Get a visual transformation instantly.</p>
             </div>
-            <div className="stepCard" style={{ flex: '1', minWidth: '220px', maxWidth: '300px', padding: '20px', border: '1px solid #e5dcbe', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.94)', textAlign: 'left' }}>
+            <div className="stepCard" style={{ flex: '1', minWidth: '220px', maxWidth: '375px', padding: '20px', border: '1px solid #e5dcbe', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.94)', textAlign: 'left' }}>
               <img src="/plan-sample.jpg" className="stepThumb" alt="Get a structured draft plan" />
               <h3 style={{ fontSize: '18px', marginBottom: '8px', color: '#1e293b' }}>3. Get a Draft Plan</h3>
               <p style={{ color: '#475569', fontSize: '15px' }}>Receive a structured scope for your project.</p>

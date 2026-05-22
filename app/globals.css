@@ -49,7 +49,7 @@ body {
 }
 
 .maxWidth {
-  max-width: 1000px;
+  max-width: 1250px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -70,7 +70,7 @@ body {
 }
 
 .heroContent {
-  max-width: 740px;
+  max-width: 925px;
 }
 
 .badge {
@@ -89,19 +89,19 @@ body {
 }
 
 .hero h1 {
-  font-size: 58px;
+  font-size: 44px;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   color: #1e293b;
   line-height: 1.15;
-  letter-spacing: -1.2px;
+  letter-spacing: -0.8px;
 }
 
 .heroSubtitle {
-  font-size: 19px;
+  font-size: 17px;
   color: #475569;
-  margin-bottom: 40px;
-  line-height: 1.7;
+  margin-bottom: 24px;
+  line-height: 1.5;
 }
 
 .waitlistForm {
@@ -116,7 +116,8 @@ body {
   flex: 1;
   max-width: 380px;
   min-width: 260px;
-  padding: 14px 20px;
+  height: 56px;
+  padding: 0 20px;
   border: 2px solid #e5dcbe;
   border-radius: 8px;
   font-size: 16px;
@@ -134,7 +135,8 @@ body {
 }
 
 .ctaButton {
-  padding: 14px 32px;
+  height: 56px;
+  padding: 0 32px;
   background: #2563eb;
   color: white;
   border: 2px solid transparent;
@@ -142,6 +144,7 @@ body {
   font-weight: 700;
   font-size: 16px;
   line-height: 1.5;
+  white-space: nowrap;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
@@ -154,7 +157,8 @@ body {
 }
 
 .ctaButtonSecondary {
-  padding: 14px 32px;
+  height: 56px;
+  padding: 0 32px;
   background: white;
   color: #2563eb;
   border: 2px solid #2563eb;
@@ -162,6 +166,7 @@ body {
   font-weight: 700;
   font-size: 16px;
   line-height: 1.5;
+  white-space: nowrap;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
@@ -194,10 +199,16 @@ body {
 
 .heroCtas {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 16px;
   margin-top: 10px;
+}
+
+.heroCtas .waitlistForm {
+  margin-bottom: 0;
 }
 
 .demoVideoButton {
@@ -263,12 +274,12 @@ section h2 {
 .sliderWrapper {
   position: relative;
   width: 100%;
-  max-width: 740px;
+  max-width: 925px;
   margin: 24px auto 16px;
   overflow: hidden;
   border-radius: 16px;
   aspect-ratio: 16 / 9;
-  max-height: min(416px, calc(100vh - 380px));
+  max-height: min(520px, calc(100vh - 380px));
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
   border: 1px solid #e5dcbe;
   touch-action: none;
@@ -387,7 +398,7 @@ section h2 {
 /* ================== PROGRESSIVE DISCLOSURE ACCORDIONS =================== */
 .accordionWrapper {
   width: 100%;
-  max-width: 740px;
+  max-width: 925px;
   margin: 0 auto 32px;
   display: flex;
   flex-direction: column;
@@ -764,7 +775,7 @@ section h2 {
 /* Responsive Overrides core breakpoints */
 @media (max-width: 768px) {
   .main { background-attachment: scroll; } /* Mobile friendly fixed background rule */
-  .hero h1 { font-size: 38px; letter-spacing: -0.6px; }
+  .hero h1 { font-size: 30px; letter-spacing: -0.4px; }
   .waitlistForm { flex-direction: column; align-items: center; }
   .emailInput { max-width: 100%; width: 100%; }
   section { padding: 64px 20px; }
